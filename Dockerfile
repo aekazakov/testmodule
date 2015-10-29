@@ -21,7 +21,7 @@ RUN \
 
 # RUN apt-get update
 
-RUN perl build_meme.pl
+RUN perl ./build_meme.pl
 
 # -----------------------------------------
 
