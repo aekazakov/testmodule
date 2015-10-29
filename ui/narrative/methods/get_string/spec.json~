@@ -38,7 +38,7 @@
 			],
 			"output_mapping": [
 				{
-					"service_method_output_path": [0],
+					"service_method_output_path": [0, "output"],
 					"target_property": "output"
 				},
 				{
