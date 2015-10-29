@@ -30,8 +30,13 @@ module testmodule {
 	typedef string user_name;
 
 	/*
-	Returns arbitrary string 
+	A string representing an output.
+	*/
+	typedef string output;
+
+	/*
+	Returns an output string
 	user_name - a name of user.
 	*/
-	funcdef get_string(workspace_name,user_name) returns (string) authentication required;
+	funcdef get_string(workspace_name,user_name) returns (output) authentication required;
 };

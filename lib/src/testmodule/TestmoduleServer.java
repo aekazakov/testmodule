@@ -61,6 +61,26 @@ public class TestmoduleServer extends JsonServerServlet {
         return returnVal;
     }
 
+    /**
+     * <p>Original spec-file function name: get_string</p>
+     * <pre>
+     * Returns an output string
+     * user_name - a name of user.
+     * </pre>
+     * @param   arg1   instance of original type "workspace_name" (A string representing a workspace name.)
+     * @param   arg2   instance of original type "user_name" (A string representing a user name.)
+     * @return   instance of original type "output" (A string representing an output.)
+     */
+    @JsonServerMethod(rpc = "testmodule.get_string", async=true)
+    public String getString(String arg1, String arg2, AuthToken authPart, RpcContext... jsonRpcContext) throws Exception {
+        String returnVal = null;
+        //BEGIN get_string
+        if ((arg2 != null)||(arg2="")) arg2="Horatio";
+        returnVal = "Alas, poor Yorick! I knew him, " + arg2 + "...";
+        //END get_string
+        return returnVal;
+    }
+
     public static void main(String[] args) throws Exception {
         if (args.length == 1) {
             new TestmoduleServer().startupServer(Integer.parseInt(args[0]));
