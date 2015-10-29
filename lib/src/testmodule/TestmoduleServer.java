@@ -93,7 +93,7 @@ public class TestmoduleServer extends JsonServerServlet {
     public String testTomtom(String arg1, AuthToken authPart, RpcContext... jsonRpcContext) throws Exception {
         String returnVal = null;
         //BEGIN test_tomtom
-		Process p = Runtime.getRuntime().exec(commandLine);
+		Process p = Runtime.getRuntime().exec("/kb/runtime/meme/bin/tomtom");
 		BufferedReader br = new BufferedReader(new InputStreamReader(
 				p.getInputStream()));
 		String line;
