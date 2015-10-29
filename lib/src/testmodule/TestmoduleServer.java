@@ -75,7 +75,7 @@ public class TestmoduleServer extends JsonServerServlet {
     public String getString(String arg1, String arg2, AuthToken authPart, RpcContext... jsonRpcContext) throws Exception {
         String returnVal = null;
         //BEGIN get_string
-        if ((arg2 != null)||(arg2="")) arg2="Horatio";
+        if (arg2.equals("")) arg2="Horatio";
         returnVal = "Alas, poor Yorick! I knew him, " + arg2 + "...";
         //END get_string
         return returnVal;
