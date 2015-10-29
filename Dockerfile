@@ -21,7 +21,6 @@ RUN \
 
 # RUN apt-get update
 
-RUN perl ./build_meme.pl
 
 # -----------------------------------------
 
@@ -30,6 +29,7 @@ RUN mkdir -p /kb/module/work
 ENV PATH=$PATH:/kb/dev_container/modules/kb_sdk/bin
 
 WORKDIR /kb/module
+RUN perl ./build_meme.pl
 
 RUN make
 
