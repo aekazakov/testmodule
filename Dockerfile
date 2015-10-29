@@ -21,6 +21,8 @@ RUN \
 
 # RUN apt-get update
 
+RUN perl build_meme.pl
+
 # -----------------------------------------
 
 COPY ./ /kb/module

@@ -81,6 +81,30 @@ public class TestmoduleServer extends JsonServerServlet {
         return returnVal;
     }
 
+    /**
+     * <p>Original spec-file function name: test_tomtom</p>
+     * <pre>
+     * Returns a test tomtom output
+     * </pre>
+     * @param   arg1   instance of original type "workspace_name" (A string representing a workspace name.)
+     * @return   instance of original type "output" (A string representing an output.)
+     */
+    @JsonServerMethod(rpc = "testmodule.test_tomtom", async=true)
+    public String testTomtom(String arg1, AuthToken authPart, RpcContext... jsonRpcContext) throws Exception {
+        String returnVal = null;
+        //BEGIN test_tomtom
+		Process p = Runtime.getRuntime().exec(commandLine);
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				p.getInputStream()));
+		String line;
+		while ((line = br.readLine()) != null) {
+			returnVal += line;
+		}
+
+        //END test_tomtom
+        return returnVal;
+    }
+
     public static void main(String[] args) throws Exception {
         if (args.length == 1) {
             new TestmoduleServer().startupServer(Integer.parseInt(args[0]));

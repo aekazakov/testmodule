@@ -180,4 +180,22 @@ public class TestmoduleClient {
         List<String> res = caller.jsonrpcCall("testmodule.get_string", args, retType, true, true, jsonRpcContext);
         return res.get(0);
     }
+
+    /**
+     * <p>Original spec-file function name: test_tomtom</p>
+     * <pre>
+     * Returns a test tomtom output
+     * </pre>
+     * @param   arg1   instance of original type "workspace_name" (A string representing a workspace name.)
+     * @return   instance of original type "output" (A string representing an output.)
+     * @throws IOException if an IO exception occurs
+     * @throws JsonClientException if a JSON RPC exception occurs
+     */
+    public String testTomtom(String arg1, RpcContext... jsonRpcContext) throws IOException, JsonClientException {
+        List<Object> args = new ArrayList<Object>();
+        args.add(arg1);
+        TypeReference<List<String>> retType = new TypeReference<List<String>>() {};
+        List<String> res = caller.jsonrpcCall("testmodule.test_tomtom", args, retType, true, true, jsonRpcContext);
+        return res.get(0);
+    }
 }

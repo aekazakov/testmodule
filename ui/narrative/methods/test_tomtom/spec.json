@@ -1,0 +1,39 @@
+{
+	"ver": "0.0.1",
+	
+	"authors": [
+		"aktest"
+	],
+	"contact": "help@kbase.us",
+	"visible": true,
+	"categories": ["active"],
+	"widgets": {
+		"input": null,
+		"output": null
+	},
+	"parameters": [], 
+	"behavior": {
+		"service-mapping": {
+			"url": "",
+			"name": "testmodule",
+			"method": "test_tomtom",
+			"input_mapping": [
+				{
+					"narrative_system_variable": "workspace",
+					"target_argument_position": 0
+				}
+			],
+			"output_mapping": [
+				{
+					"service_method_output_path": [0],
+					"target_property": "output"
+				},
+				{
+					"narrative_system_variable": "workspace",
+					"target_property": "workspaceName"
+				}
+			]
+		}
+	},
+	"job_id_output_field": "docker"
+}

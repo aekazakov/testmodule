@@ -39,4 +39,10 @@ module testmodule {
 	user_name - a name of user.
 	*/
 	funcdef get_string(workspace_name,user_name) returns (output) authentication required;
+	
+	/*
+	Returns a test tomtom output
+	*/
+	funcdef test_tomtom(workspace_name) returns (output) authentication required;
+
 };

@@ -292,6 +292,91 @@ user_name - a name of user.
     }
 }
  
+
+
+=head2 test_tomtom
+
+  $return = $obj->test_tomtom($workspace_name)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$workspace_name is a testmodule.workspace_name
+$return is a testmodule.output
+workspace_name is a string
+output is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$workspace_name is a testmodule.workspace_name
+$return is a testmodule.output
+workspace_name is a string
+output is a string
+
+
+=end text
+
+=item Description
+
+Returns a test tomtom output
+
+=back
+
+=cut
+
+ sub test_tomtom
+{
+    my($self, @args) = @_;
+
+# Authentication: required
+
+    if ((my $n = @args) != 1)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function test_tomtom (received $n, expecting 1)");
+    }
+    {
+	my($workspace_name) = @args;
+
+	my @_bad_arguments;
+        (!ref($workspace_name)) or push(@_bad_arguments, "Invalid type for argument 1 \"workspace_name\" (value was \"$workspace_name\")");
+        if (@_bad_arguments) {
+	    my $msg = "Invalid arguments passed to test_tomtom:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+								   method_name => 'test_tomtom');
+	}
+    }
+
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
+	method => "testmodule.test_tomtom",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{error}->{code},
+					       method_name => 'test_tomtom',
+					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method test_tomtom",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'test_tomtom',
+				       );
+    }
+}
+ 
   
 
 sub version {
@@ -305,16 +390,16 @@ sub version {
             Bio::KBase::Exceptions::JSONRPC->throw(
                 error => $result->error_message,
                 code => $result->content->{code},
-                method_name => 'get_string',
+                method_name => 'test_tomtom',
             );
         } else {
             return wantarray ? @{$result->result} : $result->result->[0];
         }
     } else {
         Bio::KBase::Exceptions::HTTP->throw(
-            error => "Error invoking method get_string",
+            error => "Error invoking method test_tomtom",
             status_line => $self->{client}->status_line,
-            method_name => 'get_string',
+            method_name => 'test_tomtom',
         );
     }
 }
