@@ -34,10 +34,10 @@ ADD http://meme-suite.org/meme-software/4.8.1/patch_4.8.1_5 ./patch_4.8.1_5
 RUN ./configure --prefix=/kb/runtime/meme --enable-build-libxml2 --enable-build-libxslt --with-mpicc=mpicc --with-mpidir=/usr
 RUN make 
 RUN patch -p0 -i patch_4.8.1_1 
-RUN patch -p1 -i patch_4.8.1_2 
-RUN patch -p2 -i patch_4.8.1_3
-RUN patch -p3 -i patch_4.8.1_4
-RUN patch -p4 -i patch_4.8.1_5
+RUN patch -p1 -i patch_4.8.1_2
+RUN patch -p1 -i patch_4.8.1_3
+RUN patch -p0 -i patch_4.8.1_4
+RUN patch -p1 -i patch_4.8.1_5
 RUN make install
 RUN ln -s /kb/runtime/meme/bin/meme /kb/runtime/bin/
 RUN ln -s /kb/runtime/meme/bin/tomtom /kb/runtime/bin/
