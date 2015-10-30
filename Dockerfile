@@ -43,7 +43,7 @@ RUN ln -s /kb/runtime/meme/bin/meme /kb/runtime/bin/
 RUN ln -s /kb/runtime/meme/bin/tomtom /kb/runtime/bin/
 RUN ln -s /kb/runtime/meme/bin/mast /kb/runtime/bin/
 RUN ln -s /kb/runtime/meme/bin/dust /kb/runtime/bin/
-RUN rm -rf /tmp/meme
+RUN rm -rf /tmp/meme/*
   
 # -----------------------------------------
 
@@ -52,7 +52,6 @@ RUN mkdir -p /kb/module/work
 ENV PATH=$PATH:/kb/dev_container/modules/kb_sdk/bin
 
 WORKDIR /kb/module
-# RUN perl ./build_meme.pl
 
 RUN make
 

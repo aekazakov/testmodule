@@ -191,4 +191,18 @@ class testmodule(object):
         resp = self._call('testmodule.get_output',
                           [arg_1], json_rpc_context)
         return resp[0]
+  
+    def find_motifs_with_meme_from_ws(self, arg_1, workspace_name, MemeRunParameters, json_rpc_context = None):
+        if json_rpc_context and type(json_rpc_context) is not dict:
+            raise ValueError('Method find_motifs_with_meme_from_ws: argument json_rpc_context is not type dict as required.')
+        resp = self._call('testmodule.find_motifs_with_meme_from_ws',
+                          [arg_1, workspace_name, MemeRunParameters], json_rpc_context)
+        return resp[0]
+  
+    def find_motifs_with_meme(self, arg_1, json_rpc_context = None):
+        if json_rpc_context and type(json_rpc_context) is not dict:
+            raise ValueError('Method find_motifs_with_meme: argument json_rpc_context is not type dict as required.')
+        resp = self._call('testmodule.find_motifs_with_meme',
+                          [arg_1], json_rpc_context)
+        return resp[0]
  

@@ -1,9 +1,9 @@
 #
 # define display information
 #
-name: Test TOMTOM
+name: Find motifs with MEME
 tooltip: |
-	Returns a string that contains sample TOMTOM output.
+	Returns a stringified MemeRunResultObject.
 screenshots: []
 
 icon: icon.png
@@ -26,14 +26,14 @@ suggestions:
 #
 # Configure the display and description of parameters
 #
-parameters : 
-    user_name :
+parameters :
+    input :
         ui-name : |
-            Useless field
+            Input File
         short-hint : |
-            Enter anything to get method working
+            FASTA file
         long-hint  : |
-            Enter anything to get method working.
+            Input file (in FASTA format).
 
 description : |
-	<p>This is a simple method designed to illustrate the KBase SDK. All it does is returns a tomtom program output.</p>
+	<p>This is a simple method designed to illustrate the KBase SDK. All it does is returns a string containing processed MEME output.</p>

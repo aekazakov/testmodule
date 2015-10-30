@@ -16,8 +16,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import us.kbase.kbasegenomes.ContigSet;
+import us.kbase.meme.MemeServerImpl;
+import us.kbase.kbasesequences.SequenceSet;
+import us.kbase.meme.MemeRunResult;
 import us.kbase.workspace.ObjectIdentity;
+import us.kbase.workspace.ObjectSaveData;
+import us.kbase.workspace.SaveObjectsParams;
 import us.kbase.workspace.WorkspaceClient;
+import us.kbase.common.service.UObject;
 //END_HEADER
 
 /**
@@ -107,7 +113,7 @@ public class TestmoduleServer extends JsonServerServlet {
     /**
      * <p>Original spec-file function name: get_output</p>
      * <pre>
-     * Returns a command output
+     * Takes string, executes it as a commond and returns stderr and stdout output. Very dangerous method.
      * </pre>
      * @param   arg1   instance of String
      * @return   instance of type {@link testmodule.CommandOutput CommandOutput}
@@ -129,8 +135,55 @@ public class TestmoduleServer extends JsonServerServlet {
 		p.waitFor();
 		
 		returnVal = new CommandOutput().withCommandOutput(output.toString()).withCommandError(error.toString());
+        //END get_output
+        return returnVal;
+    }
 
-		//END get_output
+    /**
+     * <p>Original spec-file function name: find_motifs_with_meme_from_ws</p>
+     * <pre>
+     * Returns kbase id of MemeRunResult object that contains results of a single MEME run
+     * MEME will be run with -dna -text parameters
+     * string ws_name - workspace id to save run result
+     * MemeRunParameters params - parameters of MEME run
+     * </pre>
+     * @param   arg1   instance of String
+     * @param   arg2   instance of original type "workspace_name" (A string representing a workspace name.)
+     * @param   arg3   instance of type {@link testmodule.MemeRunParameters MemeRunParameters}
+     * @return   parameter "output_id" of String
+     */
+    @JsonServerMethod(rpc = "testmodule.find_motifs_with_meme_from_ws", async=true)
+    public String findMotifsWithMemeFromWs(String arg1, String arg2, MemeRunParameters arg3, AuthToken authPart, RpcContext... jsonRpcContext) throws Exception {
+        String returnVal = null;
+        //BEGIN find_motifs_with_meme_from_ws
+        WorkspaceClient wc = new WorkspaceClient(new URL(this.wsUrl), authPart);
+        wc.setAuthAllowedForHttp(true);
+        SequenceSet query = wc.getObjects(Arrays.asList(new ObjectIdentity().withRef(
+                arg1 + "/" + arg3.getSourceRef()))).get(0).getData().asClassInstance(SequenceSet.class);
+        MemeRunResult result = MemeServerImpl.findMotifsWithMeme(query, arg3, arg2);
+        returnVal = result.getId(); 
+        wc.saveObjects (new SaveObjectsParams().withObjects(Arrays.asList(new ObjectSaveData().withName(arg2).withType("MEME.MemeRunResult").withData(UObject.transformObjectToObject(
+				result, UObject.class)))));
+        //END find_motifs_with_meme_from_ws
+        return returnVal;
+    }
+
+    /**
+     * <p>Original spec-file function name: find_motifs_with_meme</p>
+     * <pre>
+     * Returns kbase id of MemeRunResult object that contains results of a single MEME run
+     * MEME will be run with -dna -text parameters
+     * string ws_name - workspace id to save run result
+     * MemeRunParameters params - parameters of MEME run
+     * </pre>
+     * @param   arg1   instance of String
+     * @return   instance of original type "output" (A string representing an output.)
+     */
+    @JsonServerMethod(rpc = "testmodule.find_motifs_with_meme", async=true)
+    public String findMotifsWithMeme(String arg1, AuthToken authPart, RpcContext... jsonRpcContext) throws Exception {
+        String returnVal = null;
+        //BEGIN find_motifs_with_meme
+        //END find_motifs_with_meme
         return returnVal;
     }
 
