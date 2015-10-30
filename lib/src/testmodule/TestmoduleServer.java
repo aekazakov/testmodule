@@ -84,26 +84,35 @@ public class TestmoduleServer extends JsonServerServlet {
     }
 
     /**
-     * <p>Original spec-file function name: test_tomtom</p>
+     * <p>Original spec-file function name: get_output</p>
      * <pre>
-     * Returns a test tomtom output
+     * Returns a command output
      * </pre>
-     * @param   arg1   instance of original type "workspace_name" (A string representing a workspace name.)
-     * @return   instance of original type "output" (A string representing an output.)
+     * @param   arg1   instance of String
+     * @return   instance of type {@link testmodule.CommandOutput CommandOutput}
      */
-    @JsonServerMethod(rpc = "testmodule.test_tomtom", async=true)
-    public String testTomtom(String arg1, AuthToken authPart, RpcContext... jsonRpcContext) throws Exception {
-        String returnVal = null;
-        //BEGIN test_tomtom
-        returnVal = "TOMTOM output: \n";
-		Process p = Runtime.getRuntime().exec("/kb/runtime/meme/bin/tomtom");
+    @JsonServerMethod(rpc = "testmodule.get_output", async=true)
+    public CommandOutput getOutput(String arg1, AuthToken authPart, RpcContext... jsonRpcContext) throws Exception {
+        CommandOutput returnVal = null;
+        //BEGIN get_output
+        String output = "Output lines: \n";
+        String error = "Error lines: \n";
+		Process p = Runtime.getRuntime().exec(arg1);
 		BufferedReader br = new BufferedReader(new InputStreamReader(
 				p.getInputStream()));
 		String line;
 		while ((line = br.readLine()) != null) {
-			returnVal += line;
+			output += line;
 		}
-        //END test_tomtom
+		BufferedReader br_err = new BufferedReader(new InputStreamReader(
+				p.getErrorStream()));
+		String err_line;
+		while ((err_line = br_err.readLine()) != null) {
+			error += line;
+		}
+		returnVal.setCommandOutput(output);
+		returnVal.setCommandError(error);
+        //END get_output
         return returnVal;
     }
 

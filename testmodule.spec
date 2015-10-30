@@ -35,14 +35,23 @@ module testmodule {
 	typedef string output;
 
 	/*
+	A structure containing output and error strings.
+	*/
+
+	typedef structure {
+	    output command_output;
+	    string command_error;
+	} CommandOutput;
+
+	/*
 	Returns an output string
 	user_name - a name of user.
 	*/
 	funcdef get_string(workspace_name,user_name) returns (output) authentication required;
 	
 	/*
-	Returns a test tomtom output
+	Returns a command output
 	*/
-	funcdef test_tomtom(workspace_name) returns (output) authentication required;
+	funcdef get_output(string) returns (CommandOutput) authentication required;
 
 };

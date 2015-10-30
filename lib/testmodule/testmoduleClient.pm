@@ -294,9 +294,9 @@ user_name - a name of user.
  
 
 
-=head2 test_tomtom
+=head2 get_output
 
-  $return = $obj->test_tomtom($workspace_name)
+  $return = $obj->get_output($arg_1)
 
 =over 4
 
@@ -305,9 +305,11 @@ user_name - a name of user.
 =begin html
 
 <pre>
-$workspace_name is a testmodule.workspace_name
-$return is a testmodule.output
-workspace_name is a string
+$arg_1 is a string
+$return is a testmodule.CommandOutput
+CommandOutput is a reference to a hash where the following keys are defined:
+	command_output has a value which is a testmodule.output
+	command_error has a value which is a string
 output is a string
 
 </pre>
@@ -316,9 +318,11 @@ output is a string
 
 =begin text
 
-$workspace_name is a testmodule.workspace_name
-$return is a testmodule.output
-workspace_name is a string
+$arg_1 is a string
+$return is a testmodule.CommandOutput
+CommandOutput is a reference to a hash where the following keys are defined:
+	command_output has a value which is a testmodule.output
+	command_error has a value which is a string
 output is a string
 
 
@@ -326,13 +330,13 @@ output is a string
 
 =item Description
 
-Returns a test tomtom output
+Returns a command output
 
 =back
 
 =cut
 
- sub test_tomtom
+ sub get_output
 {
     my($self, @args) = @_;
 
@@ -341,38 +345,38 @@ Returns a test tomtom output
     if ((my $n = @args) != 1)
     {
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
-							       "Invalid argument count for function test_tomtom (received $n, expecting 1)");
+							       "Invalid argument count for function get_output (received $n, expecting 1)");
     }
     {
-	my($workspace_name) = @args;
+	my($arg_1) = @args;
 
 	my @_bad_arguments;
-        (!ref($workspace_name)) or push(@_bad_arguments, "Invalid type for argument 1 \"workspace_name\" (value was \"$workspace_name\")");
+        (!ref($arg_1)) or push(@_bad_arguments, "Invalid type for argument 1 \"arg_1\" (value was \"$arg_1\")");
         if (@_bad_arguments) {
-	    my $msg = "Invalid arguments passed to test_tomtom:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    my $msg = "Invalid arguments passed to get_output:\n" . join("", map { "\t$_\n" } @_bad_arguments);
 	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-								   method_name => 'test_tomtom');
+								   method_name => 'get_output');
 	}
     }
 
     my $result = $self->{client}->call($self->{url}, $self->{headers}, {
-	method => "testmodule.test_tomtom",
+	method => "testmodule.get_output",
 	params => \@args,
     });
     if ($result) {
 	if ($result->is_error) {
 	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
 					       code => $result->content->{error}->{code},
-					       method_name => 'test_tomtom',
+					       method_name => 'get_output',
 					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
 					      );
 	} else {
 	    return wantarray ? @{$result->result} : $result->result->[0];
 	}
     } else {
-        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method test_tomtom",
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method get_output",
 					    status_line => $self->{client}->status_line,
-					    method_name => 'test_tomtom',
+					    method_name => 'get_output',
 				       );
     }
 }
@@ -390,16 +394,16 @@ sub version {
             Bio::KBase::Exceptions::JSONRPC->throw(
                 error => $result->error_message,
                 code => $result->content->{code},
-                method_name => 'test_tomtom',
+                method_name => 'get_output',
             );
         } else {
             return wantarray ? @{$result->result} : $result->result->[0];
         }
     } else {
         Bio::KBase::Exceptions::HTTP->throw(
-            error => "Error invoking method test_tomtom",
+            error => "Error invoking method get_output",
             status_line => $self->{client}->status_line,
-            method_name => 'test_tomtom',
+            method_name => 'get_output',
         );
     }
 }
@@ -583,6 +587,43 @@ a string
 =begin text
 
 a string
+
+=end text
+
+=back
+
+
+
+=head2 CommandOutput
+
+=over 4
+
+
+
+=item Description
+
+A structure containing output and error strings.
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+command_output has a value which is a testmodule.output
+command_error has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+command_output has a value which is a testmodule.output
+command_error has a value which is a string
+
 
 =end text
 

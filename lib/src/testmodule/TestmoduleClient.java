@@ -182,20 +182,20 @@ public class TestmoduleClient {
     }
 
     /**
-     * <p>Original spec-file function name: test_tomtom</p>
+     * <p>Original spec-file function name: get_output</p>
      * <pre>
-     * Returns a test tomtom output
+     * Returns a command output
      * </pre>
-     * @param   arg1   instance of original type "workspace_name" (A string representing a workspace name.)
-     * @return   instance of original type "output" (A string representing an output.)
+     * @param   arg1   instance of String
+     * @return   instance of type {@link testmodule.CommandOutput CommandOutput}
      * @throws IOException if an IO exception occurs
      * @throws JsonClientException if a JSON RPC exception occurs
      */
-    public String testTomtom(String arg1, RpcContext... jsonRpcContext) throws IOException, JsonClientException {
+    public CommandOutput getOutput(String arg1, RpcContext... jsonRpcContext) throws IOException, JsonClientException {
         List<Object> args = new ArrayList<Object>();
         args.add(arg1);
-        TypeReference<List<String>> retType = new TypeReference<List<String>>() {};
-        List<String> res = caller.jsonrpcCall("testmodule.test_tomtom", args, retType, true, true, jsonRpcContext);
+        TypeReference<List<CommandOutput>> retType = new TypeReference<List<CommandOutput>>() {};
+        List<CommandOutput> res = caller.jsonrpcCall("testmodule.get_output", args, retType, true, true, jsonRpcContext);
         return res.get(0);
     }
 }

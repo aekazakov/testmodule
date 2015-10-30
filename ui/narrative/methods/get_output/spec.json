@@ -1,0 +1,53 @@
+{
+	"ver": "0.0.1",
+	
+	"authors": [
+		"aktest"
+	],
+	"contact": "help@kbase.us",
+	"visible": true,
+	"categories": ["active"],
+	"widgets": {
+		"input": null,
+		"output": null
+	},
+	"parameters": [
+			{
+			"id": "input",
+			"optional": false,
+			"advanced": false,
+			"allow_multiple": false,
+			"default_values": [ "" ],
+			"field_type": "text"
+		}
+
+	], 
+	"behavior": {
+		"service-mapping": {
+			"url": "",
+			"name": "testmodule",
+			"method": "get_output",
+			"input_mapping": [
+				{
+					"input_parameter": "input",
+					"target_argument_position": 0
+				}
+			],
+			"output_mapping": [
+				{
+					"input_parameter": "input",
+					"target_property": "input"
+				},
+				{
+					"service_method_output_path": [0,"command_output"],
+					"target_property": "output"
+				},
+				{
+					"service_method_output_path": [0,"command_error"],
+					"target_property": "error"
+				}
+			]
+		}
+	},
+	"job_id_output_field": "docker"
+}
