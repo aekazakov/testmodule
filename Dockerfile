@@ -20,7 +20,7 @@ RUN \
 # any required dependencies for your module.
 
 # RUN apt-get update
-RUN apt-get install libcr-dev mpich2 mpich2-doc
+RUN apt-get -y install libcr-dev mpich2 mpich2-doc
 RUN mkdir -p /tmp/meme/
 WORKDIR /tmp/meme
 ADD http://meme-suite.org/meme-software/4.8.1/meme_4.8.1.tar.gz ./meme_4.8.1.tar.gz
