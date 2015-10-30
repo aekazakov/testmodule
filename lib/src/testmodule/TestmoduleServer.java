@@ -140,41 +140,11 @@ public class TestmoduleServer extends JsonServerServlet {
     }
 
     /**
-     * <p>Original spec-file function name: find_motifs_with_meme_from_ws</p>
-     * <pre>
-     * Returns kbase id of MemeRunResult object that contains results of a single MEME run
-     * MEME will be run with -dna -text parameters
-     * string ws_name - workspace id to save run result
-     * MemeRunParameters params - parameters of MEME run
-     * </pre>
-     * @param   arg1   instance of String
-     * @param   arg2   instance of original type "workspace_name" (A string representing a workspace name.)
-     * @param   arg3   instance of type {@link testmodule.MemeRunParameters MemeRunParameters}
-     * @return   parameter "output_id" of String
-     */
-    @JsonServerMethod(rpc = "testmodule.find_motifs_with_meme_from_ws", async=true)
-    public String findMotifsWithMemeFromWs(String arg1, String arg2, MemeRunParameters arg3, AuthToken authPart, RpcContext... jsonRpcContext) throws Exception {
-        String returnVal = null;
-        //BEGIN find_motifs_with_meme_from_ws
-        WorkspaceClient wc = new WorkspaceClient(new URL(this.wsUrl), authPart);
-        wc.setAuthAllowedForHttp(true);
-        SequenceSet query = wc.getObjects(Arrays.asList(new ObjectIdentity().withRef(
-                arg1 + "/" + arg3.getSourceRef()))).get(0).getData().asClassInstance(SequenceSet.class);
-        MemeRunResult result = MemeServerImpl.findMotifsWithMeme(query, arg3, arg2);
-        returnVal = result.getId(); 
-        wc.saveObjects (new SaveObjectsParams().withObjects(Arrays.asList(new ObjectSaveData().withName(arg2).withType("MEME.MemeRunResult").withData(UObject.transformObjectToObject(
-				result, UObject.class)))));
-        //END find_motifs_with_meme_from_ws
-        return returnVal;
-    }
-
-    /**
      * <p>Original spec-file function name: find_motifs_with_meme</p>
      * <pre>
-     * Returns kbase id of MemeRunResult object that contains results of a single MEME run
+     * Returns stringified MEME run result
      * MEME will be run with -dna -text parameters
-     * string ws_name - workspace id to save run result
-     * MemeRunParameters params - parameters of MEME run
+     * string - input sequences in FASTA format
      * </pre>
      * @param   arg1   instance of String
      * @return   instance of original type "output" (A string representing an output.)
@@ -183,6 +153,7 @@ public class TestmoduleServer extends JsonServerServlet {
     public String findMotifsWithMeme(String arg1, AuthToken authPart, RpcContext... jsonRpcContext) throws Exception {
         String returnVal = null;
         //BEGIN find_motifs_with_meme
+        returnVal = MemeServerImpl.findMotifsWithMeme(arg1);
         //END find_motifs_with_meme
         return returnVal;
     }

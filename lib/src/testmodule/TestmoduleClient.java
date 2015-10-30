@@ -200,37 +200,11 @@ public class TestmoduleClient {
     }
 
     /**
-     * <p>Original spec-file function name: find_motifs_with_meme_from_ws</p>
-     * <pre>
-     * Returns kbase id of MemeRunResult object that contains results of a single MEME run
-     * MEME will be run with -dna -text parameters
-     * string ws_name - workspace id to save run result
-     * MemeRunParameters params - parameters of MEME run
-     * </pre>
-     * @param   arg1   instance of String
-     * @param   arg2   instance of original type "workspace_name" (A string representing a workspace name.)
-     * @param   arg3   instance of type {@link testmodule.MemeRunParameters MemeRunParameters}
-     * @return   parameter "output_id" of String
-     * @throws IOException if an IO exception occurs
-     * @throws JsonClientException if a JSON RPC exception occurs
-     */
-    public String findMotifsWithMemeFromWs(String arg1, String arg2, MemeRunParameters arg3, RpcContext... jsonRpcContext) throws IOException, JsonClientException {
-        List<Object> args = new ArrayList<Object>();
-        args.add(arg1);
-        args.add(arg2);
-        args.add(arg3);
-        TypeReference<List<String>> retType = new TypeReference<List<String>>() {};
-        List<String> res = caller.jsonrpcCall("testmodule.find_motifs_with_meme_from_ws", args, retType, true, true, jsonRpcContext);
-        return res.get(0);
-    }
-
-    /**
      * <p>Original spec-file function name: find_motifs_with_meme</p>
      * <pre>
-     * Returns kbase id of MemeRunResult object that contains results of a single MEME run
+     * Returns stringified MEME run result
      * MEME will be run with -dna -text parameters
-     * string ws_name - workspace id to save run result
-     * MemeRunParameters params - parameters of MEME run
+     * string - input sequences in FASTA format
      * </pre>
      * @param   arg1   instance of String
      * @return   instance of original type "output" (A string representing an output.)

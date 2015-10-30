@@ -68,7 +68,7 @@ public class test_java_client {
 	        throw e;
 	    }
 	}
-
+/*
 	@Test
 	public void testMemeRun() throws Exception {
 		
@@ -96,5 +96,5 @@ public class test_java_client {
         
         System.out.println(result);
 	}
-
+*/
 }

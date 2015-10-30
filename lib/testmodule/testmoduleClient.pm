@@ -383,124 +383,6 @@ Takes string, executes it as a commond and returns stderr and stdout output. Ver
  
 
 
-=head2 find_motifs_with_meme_from_ws
-
-  $output_id = $obj->find_motifs_with_meme_from_ws($arg_1, $workspace_name, $MemeRunParameters)
-
-=over 4
-
-=item Parameter and return types
-
-=begin html
-
-<pre>
-$arg_1 is a string
-$workspace_name is a testmodule.workspace_name
-$MemeRunParameters is a testmodule.MemeRunParameters
-$output_id is a string
-workspace_name is a string
-MemeRunParameters is a reference to a hash where the following keys are defined:
-	mod has a value which is a string
-	nmotifs has a value which is an int
-	minw has a value which is an int
-	maxw has a value which is an int
-	nsites has a value which is an int
-	minsites has a value which is an int
-	maxsites has a value which is an int
-	pal has a value which is an int
-	revcomp has a value which is an int
-	source_ref has a value which is a testmodule.sequence_set_ref
-	source_id has a value which is a string
-sequence_set_ref is a string
-
-</pre>
-
-=end html
-
-=begin text
-
-$arg_1 is a string
-$workspace_name is a testmodule.workspace_name
-$MemeRunParameters is a testmodule.MemeRunParameters
-$output_id is a string
-workspace_name is a string
-MemeRunParameters is a reference to a hash where the following keys are defined:
-	mod has a value which is a string
-	nmotifs has a value which is an int
-	minw has a value which is an int
-	maxw has a value which is an int
-	nsites has a value which is an int
-	minsites has a value which is an int
-	maxsites has a value which is an int
-	pal has a value which is an int
-	revcomp has a value which is an int
-	source_ref has a value which is a testmodule.sequence_set_ref
-	source_id has a value which is a string
-sequence_set_ref is a string
-
-
-=end text
-
-=item Description
-
-Returns kbase id of MemeRunResult object that contains results of a single MEME run
-MEME will be run with -dna -text parameters
-string ws_name - workspace id to save run result
-MemeRunParameters params - parameters of MEME run
-
-=back
-
-=cut
-
- sub find_motifs_with_meme_from_ws
-{
-    my($self, @args) = @_;
-
-# Authentication: required
-
-    if ((my $n = @args) != 3)
-    {
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
-							       "Invalid argument count for function find_motifs_with_meme_from_ws (received $n, expecting 3)");
-    }
-    {
-	my($arg_1, $workspace_name, $MemeRunParameters) = @args;
-
-	my @_bad_arguments;
-        (!ref($arg_1)) or push(@_bad_arguments, "Invalid type for argument 1 \"arg_1\" (value was \"$arg_1\")");
-        (!ref($workspace_name)) or push(@_bad_arguments, "Invalid type for argument 2 \"workspace_name\" (value was \"$workspace_name\")");
-        (ref($MemeRunParameters) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 3 \"MemeRunParameters\" (value was \"$MemeRunParameters\")");
-        if (@_bad_arguments) {
-	    my $msg = "Invalid arguments passed to find_motifs_with_meme_from_ws:\n" . join("", map { "\t$_\n" } @_bad_arguments);
-	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-								   method_name => 'find_motifs_with_meme_from_ws');
-	}
-    }
-
-    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
-	method => "testmodule.find_motifs_with_meme_from_ws",
-	params => \@args,
-    });
-    if ($result) {
-	if ($result->is_error) {
-	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
-					       code => $result->content->{error}->{code},
-					       method_name => 'find_motifs_with_meme_from_ws',
-					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
-					      );
-	} else {
-	    return wantarray ? @{$result->result} : $result->result->[0];
-	}
-    } else {
-        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method find_motifs_with_meme_from_ws",
-					    status_line => $self->{client}->status_line,
-					    method_name => 'find_motifs_with_meme_from_ws',
-				       );
-    }
-}
- 
-
-
 =head2 find_motifs_with_meme
 
   $return = $obj->find_motifs_with_meme($arg_1)
@@ -531,10 +413,9 @@ output is a string
 
 =item Description
 
-Returns kbase id of MemeRunResult object that contains results of a single MEME run
+Returns stringified MEME run result
 MEME will be run with -dna -text parameters
-string ws_name - workspace id to save run result
-MemeRunParameters params - parameters of MEME run
+string - input sequences in FASTA format
 
 =back
 

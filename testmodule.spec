@@ -95,14 +95,14 @@ module testmodule {
 		MEME will be run with -dna -text parameters
 		string ws_name - workspace id to save run result
 		MemeRunParameters params - parameters of MEME run
-	*/
+	
 	funcdef find_motifs_with_meme_from_ws(string, workspace_name, MemeRunParameters) returns(string output_id) authentication required;
+	*/
 
 	/*
-		Returns kbase id of MemeRunResult object that contains results of a single MEME run
+		Returns stringified MEME run result
 		MEME will be run with -dna -text parameters
-		string ws_name - workspace id to save run result
-		MemeRunParameters params - parameters of MEME run
+		string - input sequences in FASTA format 
 	*/
 	funcdef find_motifs_with_meme(string) returns(output) authentication required;
 
