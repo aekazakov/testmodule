@@ -13,6 +13,7 @@ import testmodule.TestmoduleServer;
 import us.kbase.auth.AuthService;
 import us.kbase.auth.AuthToken;
 import us.kbase.common.service.ServerException;
+import testmodule.MemeRunParameters;
 
 import org.junit.Test;
 
@@ -26,6 +27,8 @@ public class test_java_client {
 	public void testTestmoduleServer() throws Exception {
 		
 		
+		String command = "pwd";
+
 
 		try {
 	    	AuthToken token = AuthService.login(USER_NAME, new String(PASSWORD)).getToken();
@@ -64,6 +67,34 @@ public class test_java_client {
 	        e.printStackTrace();
 	        throw e;
 	    }
+	}
+
+	@Test
+	public void testMemeRun() throws Exception {
+		
+		String queryName = "pwd";
+		String wsName = "AKtest";
+
+		MemeRunParameters params = new MemeRunParameters();
+		params.setMod("oops");
+		params.setNmotifs(2L);
+		params.setMinw(14L);
+		params.setMaxw(24L);
+		params.setNsites(0L);
+		params.setMinsites(0L);
+		params.setMaxsites(0L);
+		params.setPal(1L);
+		params.setRevcomp(0L);
+		params.setSourceId(queryName);
+		params.setSourceRef(wsName + "/" + queryName);
+
+    	AuthToken token = AuthService.login(USER_NAME, new String(PASSWORD)).getToken();
+        URL url = new URL(serverUrl);
+        TestmoduleClient client = new TestmoduleClient(url, token);
+        client.setIsInsecureHttpConnectionAllowed(true);
+        String result  = client.findMotifsWithMemeFromWs(wsName, "testObject", params, null);
+        
+        System.out.println(result);
 	}
 
 }

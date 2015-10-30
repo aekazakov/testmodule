@@ -13,7 +13,7 @@
 	},
 	"parameters": [ 
 		{
-			"id": "user_name",
+			"id": "input",
 			"optional": false,
 			"advanced": false,
 			"allow_multiple": true,
@@ -34,13 +34,13 @@
 			],
 			"output_mapping": [
 				{
-					"output": [0],
-					"target_property": "output"
-				},
-				{
 					"input_parameter": "input",
 					"target_property": "input"
-				}
+				},
+				{
+					"service_method_output_path": [0],
+					"target_property": "output"
+				},
 			]
 		}
 	},
