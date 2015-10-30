@@ -11,6 +11,8 @@ import us.kbase.common.service.RpcContext;
 import java.net.URL;
 import java.util.Arrays;
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import us.kbase.kbasegenomes.ContigSet;
@@ -30,6 +32,25 @@ public class TestmoduleServer extends JsonServerServlet {
 
     //BEGIN_CLASS_HEADER
     private final String wsUrl;
+    
+    private static Thread readInNewThread(final InputStream is, final StringBuilder target) {
+    	Thread ret = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					BufferedReader br = new BufferedReader(new InputStreamReader(is));
+					String line;
+					while ((line = br.readLine()) != null) {
+						target.append(line).append("\n");
+					}
+				} catch (IOException ex) {
+					throw new IllegalStateException(ex);
+				}
+			}
+    	});
+    	ret.start();
+    	return ret;
+    }
     //END_CLASS_HEADER
 
     public TestmoduleServer() throws Exception {
@@ -95,24 +116,21 @@ public class TestmoduleServer extends JsonServerServlet {
     public CommandOutput getOutput(String arg1, AuthToken authPart, RpcContext... jsonRpcContext) throws Exception {
         CommandOutput returnVal = null;
         //BEGIN get_output
-        String output = "Output lines: \n";
-        String error = "Error lines: \n";
+        
+        
+        StringBuilder output = new StringBuilder("Output lines: \n");
+        StringBuilder error = new StringBuilder("Error lines: \n");
 		Process p = Runtime.getRuntime().exec(arg1);
-		BufferedReader br = new BufferedReader(new InputStreamReader(
-				p.getInputStream()));
-		String line;
-		while ((line = br.readLine()) != null) {
-			output += line;
-		}
-		BufferedReader br_err = new BufferedReader(new InputStreamReader(
-				p.getErrorStream()));
-		String err_line;
-		while ((err_line = br_err.readLine()) != null) {
-			error += line;
-		}
-		returnVal.setCommandOutput(output);
-		returnVal.setCommandError(error);
-        //END get_output
+		
+		Thread outputThread = readInNewThread(p.getInputStream(), output);
+		Thread errorThread = readInNewThread(p.getErrorStream(), error);
+		outputThread.join();
+		errorThread.join();
+		p.waitFor();
+		
+		returnVal = new CommandOutput().withCommandOutput(output.toString()).withCommandError(error.toString());
+
+		//END get_output
         return returnVal;
     }
 
