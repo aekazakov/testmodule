@@ -26,7 +26,14 @@ suggestions:
 #
 # Configure the display and description of parameters
 #
-parameters : []
+parameters : 
+    user_name :
+        ui-name : |
+            Useless field
+        short-hint : |
+            Enter anything to get method working
+        long-hint  : |
+            Enter anything to get method working.
 
 description : |
 	<p>This is a simple method designed to illustrate the KBase SDK. All it does is returns a tomtom program output.</p>

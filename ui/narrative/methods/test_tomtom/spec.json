@@ -11,7 +11,17 @@
 		"input": null,
 		"output": null
 	},
-	"parameters": [], 
+	"parameters": [
+			{
+			"id": "user_name",
+			"optional": true,
+			"advanced": false,
+			"allow_multiple": false,
+			"default_values": [ "" ],
+			"field_type": "text"
+		}
+
+	], 
 	"behavior": {
 		"service-mapping": {
 			"url": "",
