@@ -34,7 +34,8 @@
 				{
 					"input_parameter": "user_name",
 					"target_argument_position": 1
-				}
+				},
+				
 			],
 			"output_mapping": [
 				{
