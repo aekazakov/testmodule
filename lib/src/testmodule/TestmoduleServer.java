@@ -23,7 +23,6 @@ import us.kbase.workspace.ObjectIdentity;
 import us.kbase.workspace.ObjectSaveData;
 import us.kbase.workspace.SaveObjectsParams;
 import us.kbase.workspace.WorkspaceClient;
-import us.kbase.common.service.UObject;
 //END_HEADER
 
 /**
